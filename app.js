@@ -1,20 +1,23 @@
 /*TODO: start game*/
 document.querySelector(".overlay span").onclick = function () {
-    let playerName = prompt("Enter Your Name");
+    document.querySelector(".overlay").style.display = "none";
+    document.querySelector(".start").style.display = "block"; 
+}
+document.querySelector(".start #submit").onclick = function () {
+    document.querySelector(".start").style.display = "none";
+    let playerName = document.getElementById("name").value;
     if (playerName == null || playerName == "") {
         document.querySelector(".name span").innerHTML = "Player";
     } else {
         document.querySelector(".name span").innerHTML = playerName;
     }
-    document.querySelector(".overlay").style.display = "none";
     cards.forEach(card => {
-        card.classList.remove("has-matched");
         card.classList.add("is-flipped");
         setTimeout(() => {
             card.classList.remove("is-flipped");
+            playtimer();
         }, 3000)
     });
-    
 }
 
 /*TODO: shuffle cards*/
@@ -42,8 +45,6 @@ function flipCard(selectedCard) {
 
     let allFlippedCards = cards.filter(flippedCard => flippedCard.classList.contains("is-flipped"));
     if (allFlippedCards.length === 2) {
-        //stop clicking function
-        stopClicking();
         //check matched cards
         checkMatchedCards(allFlippedCards[0], allFlippedCards[1]);
 
@@ -62,14 +63,17 @@ function checkMatchedCards(firstElem, secondElem) {
         let allMatchedCards = cards.filter(matchedCard => matchedCard.classList.contains("has-matched"));
         if (allMatchedCards.length === cards.length) {
             setTimeout(() => {
-                alert("congratulations");
-                document.querySelector(".overlay").style.display = "block";
+                document.getElementById("complete").play();
+                document.querySelector(".win").style.display = "block";
+                timer.remove();
             }, duration)
         }
 
         document.getElementById("success").play();
     } else {
         wrongTries.innerHTML = parseInt(wrongTries.innerHTML) + 1;
+        //stop clicking function
+        stopClicking();
         document.getElementById("fail").play();
         setTimeout(() => {
             firstElem.classList.remove("is-flipped");
@@ -83,7 +87,6 @@ function stopClicking() {
 
     setTimeout(() => {
         cardContainer.classList.remove("no-clicking");
-
     }, duration)
 }
 /*TODO: shuffle function*/
@@ -104,5 +107,38 @@ function shuffle(array) {
     return array;
 }
 
+/*timer count down*/
+timer = document.getElementById("timer-display");
+function playtimer(cancel) {
+        let myMinutes = 3,
+            mySeconds = 0,
+            secondsCount = (myMinutes * 60) + (mySeconds * 1);
+        let countDown = setInterval(function () {
+
+            let minutes = Math.floor(secondsCount / 60),
+                remSeconds = secondsCount % 60;
+
+            if (remSeconds < 10) {
+                remSeconds = '0' + remSeconds;
+            }
+
+            timer.innerHTML = minutes + ':' + remSeconds;
+
+            if (secondsCount > 0) {
+                secondsCount--;
+            } else {
+                document.getElementById("timeout").play();
+                cardContainer.classList.add("no-clicking");
+                document.querySelector(".restart").style.display = "block";
+                clearInterval(countDown);
+            }
+        }, 1000);
+};
+let restartbtn = document.querySelectorAll(".restartbtn");
+restartbtn.forEach(btn => {
+    btn.onclick = function () {
+        location.reload();
+    }
+});
 
 

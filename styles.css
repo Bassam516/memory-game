@@ -8,7 +8,7 @@ html,body{
     padding: 0;
     font-family: Arial, Tahoma;
 }
-
+/*strat info section*/
 .info{
     width: 939px;
     background-color: #e2d1f8;
@@ -19,13 +19,20 @@ html,body{
 }
 .info .name{
     float: left;
-    width: 50%;
+    width: 33%;
 }
 .info .tries{
     float: right;
-    width: 50%;
+    width: 33%;
     text-align: right;
 }
+.info #timer-display{
+    width: 33%;
+    float: left;
+    text-align: center;
+}
+/*end info section*/
+/*start game block section*/
 .game-block{
     display: flex;
     width: 959px;
@@ -78,6 +85,8 @@ html,body{
     text-align: center;
     backface-visibility: hidden;
 }
+/*end game block section*/
+/*start overlay section*/
 .overlay {
     position: fixed;
     top: 0;
@@ -98,4 +107,133 @@ html,body{
     font-size: 20px;
     cursor: pointer;
     text-align: center;
+}
+/*end overlay section*/
+/*start restart section*/
+.restart,
+.start,
+.win{
+    position: fixed;
+    width: 50%;
+    height: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background-color: #8d31ff;
+    border: 2px solid rgb(180 123 255 / 42%);
+    color: #fff;
+    box-shadow: 1px 1px 4px 1px #00000082;
+    text-align: center;
+    font-size: 25px;
+    z-index: 2;
+    display: none;
+}
+.restart div,
+.start div,
+.win div{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+.start #name,
+.start #name:focus{
+    border: 1px solid #fff;
+    display: block;
+    width: 100%;
+    padding: 7px;
+    margin-bottom: 30px;
+    background-color: #0000;
+    color: #fff;
+}
+.restart button,
+.start #submit,
+.win button{
+    border: none;
+    outline: none;
+    padding: 15px 25px;
+    background-color: rgb(70 0 160 / 90%);
+    color: #fff;
+    font-size: 17px;
+    cursor: pointer;
+}
+/*end restart section*/
+/*start footer*/
+footer {
+    position: absolute;
+    bottom: -55px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    background-color: #4d05a97d;
+    color: #d200b9;
+    font-size: 16px;
+    letter-spacing: 1.4px;
+    font-weight: bold;
+}
+footer span{
+    color: #37027c;
+}
+/*end footer*/
+@media(max-width: 980px){
+    .info{
+        width: 100vw;
+    }
+    .game-block{
+        width: 96vw;
+    }
+    .game-block .card-block{
+        margin: 0 8px 10px;
+    }
+    .overlay{
+        width: 100vw;
+        height: 100vh;
+    }
+}
+@media(max-width: 813px){
+    .game-block .card-block{
+        margin: 0 2px 4px;
+    }
+
+}
+@media(max-width: 750px){
+     .info{
+        width: 94vw;
+        font-size: 13px;
+    }
+    .game-block{
+        width: 94vw;
+    }
+    .game-block .card-block{
+        margin: 0 1px 4px;
+    }
+    .game-block .card-block{
+        height: 80px;
+        flex: 1 0 24%;
+    }
+    .game-block .card-block .front{
+        line-height: 80px;
+    }
+    .game-block .card-block .front:before{
+        font-size: 50px;
+    }
+    .restart, .start, .win{
+        width: 90%;
+    }
+}
+@media(min-width:510px ) and (max-width: 750px){
+    .game-block .card-block{
+        margin: 0 1px 4px;
+    }
+    .game-block .card-block{
+    height: 120px;
+    flex: 1 0 24%;
+    }
+    .game-block .card-block .front{
+        line-height: 120px;
+    }
+    .game-block .card-block .front:before{
+        font-size: 80px;
+    }
+
 }

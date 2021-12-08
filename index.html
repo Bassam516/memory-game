@@ -7,16 +7,18 @@
     <link rel="stylesheet" href="styles.css"/>
 </head>
 <body>
-
+    <!--strat info section-->
     <section class="info">
         <div class="name">
             Hello: <span></span>
         </div>
+        <div id="timer-display"></div>
         <div class="tries">
             Wrong tries: <span>0</span>
         </div>
     </section>
-
+    <!--end info section-->
+    <!--strat game block section-->
     <section class="game-block">
         <div class="card-block" data-animals="lion">
             <div class="face front">
@@ -179,11 +181,48 @@
             </div>
         </div>
     </section>
+    <!--end game block section-->
+    <!--strat overlay section-->
     <section class="overlay">
         <span>Start Game</span>
     </section>
+    <!--end overlay section-->
+    <!--strat start section-->
+    <section class="start">
+        <div>
+            <p>Enter Your Name</p>
+            <form onsubmit="return false">
+                <input type="text" id="name" />
+                <input type="submit" id="submit" value="Go" />
+            </form>
+        </div>
+    </section>
+    <!--end start section-->
+    <!--strat restart section-->
+    <section class="restart">
+        <div>
+            <p>ooops, Time is over</p>
+            <button class="restartbtn">Restart</button>
+        </div>
+    </section>
+    <!--end restart section-->
+    <!--strat win section-->
+    <section class="win">
+        <div>
+            <p>Well Done</p>
+            <button class="restartbtn">Replay</button>
+        </div>
+    </section>
+    <!--end win section-->
+    <!--strat audio section-->
     <audio src="audio/fail.wav" id="fail" preload="auto"></audio>
     <audio src="audio/success.wav" id="success" preload="auto"></audio>
+    <audio src="audio/complete.mp3" id="complete" preload="auto"></audio>
+    <audio src="audio/timeout.mp3" id="timeout" preload="auto"></audio>
+    <!--end audio section-->
+    <footer>
+        <p> Created with &#128151; By <span>Bassam</span></p>
+    </footer>
     <script src="app.js"></script>
 </body>
 </html>
