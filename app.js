@@ -3,22 +3,27 @@ document.querySelector(".overlay span").onclick = function () {
     document.querySelector(".overlay").style.display = "none";
     document.querySelector(".start").style.display = "block"; 
 }
-document.querySelector(".start #submit").onclick = function () {
-    document.querySelector(".start").style.display = "none";
-    let playerName = document.getElementById("name").value;
-    if (playerName == null || playerName == "") {
-        document.querySelector(".name span").innerHTML = "Player";
-    } else {
-        document.querySelector(".name span").innerHTML = playerName;
+let submit = document.querySelectorAll(".start .submit");
+submit.forEach(sub => {
+    sub.onclick = function () {
+        let myMinutes = this.dataset.timer;
+        document.querySelector(".start").style.display = "none";
+        let playerName = document.getElementById("name").value;
+        if (playerName == null || playerName == "") {
+            document.querySelector(".name span").innerHTML = "Player";
+        } else {
+            document.querySelector(".name span").innerHTML = playerName;
+        }
+        cards.forEach(card => {
+            card.classList.add("is-flipped");
+            setTimeout(() => {
+                card.classList.remove("is-flipped");
+                playtimer(myMinutes);
+            }, 3000)
+        });
     }
-    cards.forEach(card => {
-        card.classList.add("is-flipped");
-        setTimeout(() => {
-            card.classList.remove("is-flipped");
-            playtimer();
-        }, 3000)
-    });
-}
+});
+    
 
 /*TODO: shuffle cards*/
 
@@ -55,29 +60,37 @@ function flipCard(selectedCard) {
 function checkMatchedCards(firstElem, secondElem) {
     let wrongTries = document.querySelector(".tries span");
     if (firstElem.dataset.animals === secondElem.dataset.animals) {
+        document.getElementById("success").play();
         firstElem.classList.remove("is-flipped");
         secondElem.classList.remove("is-flipped");
-        firstElem.classList.add("has-matched");
+        firstElem.classList.add("has-matched",);
         secondElem.classList.add("has-matched");
-
+        setTimeout(()=>{
+            firstElem.children[1].firstElementChild.classList.add("scale");
+            secondElem.children[1].firstElementChild.classList.add("scale");
+        }, 200)
+        
         let allMatchedCards = cards.filter(matchedCard => matchedCard.classList.contains("has-matched"));
         if (allMatchedCards.length === cards.length) {
             setTimeout(() => {
                 document.getElementById("complete").play();
                 document.querySelector(".win").style.display = "block";
                 timer.remove();
-            }, duration)
+            }, 200)
         }
 
-        document.getElementById("success").play();
     } else {
         wrongTries.innerHTML = parseInt(wrongTries.innerHTML) + 1;
         //stop clicking function
         stopClicking();
         document.getElementById("fail").play();
         setTimeout(() => {
-            firstElem.classList.remove("is-flipped");
-            secondElem.classList.remove("is-flipped");
+            firstElem.classList.add("wobble");
+            secondElem.classList.add("wobble");
+        }, duration/2)
+        setTimeout(() => {
+            firstElem.classList.remove("is-flipped", "wobble");
+            secondElem.classList.remove("is-flipped", "wobble");
         }, duration)
     }
 }
@@ -109,10 +122,10 @@ function shuffle(array) {
 
 /*timer count down*/
 timer = document.getElementById("timer-display");
-function playtimer(cancel) {
-        let myMinutes = 3,
-            mySeconds = 0,
+function playtimer(myMinutes) {
+        let mySeconds = 0,
             secondsCount = (myMinutes * 60) + (mySeconds * 1);
+  
         let countDown = setInterval(function () {
 
             let minutes = Math.floor(secondsCount / 60),
